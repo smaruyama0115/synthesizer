@@ -85,6 +85,7 @@ fig_line = go.Figure(layout = layout_line)
 
 # ダッシュボードに表示
 app = Dash(external_stylesheets=[dbc.themes.FLATLY])
+server = app.server
 
 sidebar = html.Div(
     [
@@ -250,8 +251,8 @@ def sync_checklists(category_selected, all_selected, dropdown):
 
     return category_selected, all_selected, fig
 
-port = int(os.environ.get("PORT", 5000))
+# port = int(os.environ.get("PORT", 5000))
 # app.run_server(debug=True, port=port)
 
-server = app.server
-app.run_server(debug=True, port=port)
+
+app.run_server()
