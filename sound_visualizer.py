@@ -18,7 +18,7 @@ import plotly.graph_objs as go
 import plotly.express as px
 
 from scipy.io import wavfile  # install : conda install scipy
-from pygame import mixer      # pip install pygame
+# from pygame import mixer      # pip install pygame
 
 import dash
 from dash import Dash, dcc, html, Input, Output, State, callback, callback_context
@@ -260,10 +260,10 @@ def sound(clickData):
 
         wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
 
-        # wavファイルをロードして再生
-        mixer.init()  # mixerを初期化
-        mixer.music.load(wav_file)  # wavをロード
-        mixer.music.play(1)  # wavを1回再生
+        # # wavファイルをロードして再生
+        # mixer.init()  # mixerを初期化
+        # mixer.music.load(wav_file)  # wavをロード
+        # mixer.music.play(1)  # wavを1回再生
     
         fig_line = go.Figure()
         fig_line.add_trace(
