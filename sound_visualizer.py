@@ -24,7 +24,6 @@ import dash
 from dash import Dash, dcc, html, Input, Output, State, callback, callback_context
 
 import dash_bootstrap_components as dbc
-import dash_html_components as html
 
 # csvファイルの読み込み
 l_sound_name = [] #サウンドの名前
@@ -32,7 +31,8 @@ l_content    = [] #サウンドが所属するグループ
 l_data       = [] #サウンドの周波数情報
 l_columns    = [] #サウンドの周波数情報ラベル
 
-path_csv     = "./csv"
+path_csv     = "https://github.com/smaruyama0115/synthesizer/raw/master/csv/"
+path_sound   = "https://github.com/smaruyama0115/synthesizer/raw/master/sound/"
 
 for current_dir, _, files_list in os.walk(path_csv):
     for file in files_list:
@@ -257,7 +257,7 @@ def sound(clickData):
         sound_name = clickData['points'][0]['text']
         content    = df_graph[df_graph["sound_name"] == sound_name]["content"].values[0]
 
-        wav_file   = os.path.join("sound", content , sound_name) + ".wav"
+        wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
 
         # wavファイルをロードして再生
         mixer.init()  # mixerを初期化
