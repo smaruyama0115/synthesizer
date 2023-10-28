@@ -324,4 +324,4 @@ def sync_checklists(category_selected, all_selected, dropdown):
 
     return category_selected, all_selected, fig
 
-app.run_server(debug=False, host='0.0.0.0', port="1236")
+app.run_server(debug=False)
