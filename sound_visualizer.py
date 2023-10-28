@@ -325,4 +325,5 @@ def sync_checklists(category_selected, all_selected, dropdown):
 
     return category_selected, all_selected, fig
 
-app.run_server(debug=True, port=8049)
+port = int(os.environ.get("PORT", 5000))
+app.run_server(debug=True, host="0.0.0.0", port=port)
