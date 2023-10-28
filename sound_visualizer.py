@@ -31,8 +31,9 @@ l_content    = [] #サウンドが所属するグループ
 l_data       = [] #サウンドの周波数情報
 l_columns    = [] #サウンドの周波数情報ラベル
 
-path_csv     = "https://github.com/smaruyama0115/synthesizer/raw/master/csv/"
-path_sound   = "https://github.com/smaruyama0115/synthesizer/raw/master/sound/"
+path_csv     = "./csv"
+path_sound   = "./sound"
+
 
 for current_dir, _, files_list in os.walk(path_csv):
     for file in files_list:
@@ -324,4 +325,4 @@ def sync_checklists(category_selected, all_selected, dropdown):
 
     return category_selected, all_selected, fig
 
-app.run_server(debug=False)
+app.run_server(debug=True, port=8049)
