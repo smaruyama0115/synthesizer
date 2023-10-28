@@ -329,4 +329,4 @@ port = int(os.environ.get("PORT", 5000))
 # app.run_server(debug=True, port=port)
 
 server = app.server
-app.run_server(debug=True, host="0.0.0.0", port=port)
+app.run_server(debug=True, port=port)
