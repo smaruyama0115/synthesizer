@@ -25,87 +25,12 @@ from dash import Dash, dcc, html, Input, Output, State, callback, callback_conte
 
 import dash_bootstrap_components as dbc
 
-# csvファイルの読み込み
-l_sound_name = [] #サウンドの名前
-l_content    = [] #サウンドが所属するグループ
-l_data       = [] #サウンドの周波数情報
-l_columns    = [] #サウンドの周波数情報ラベル
+# pathの設定
+path_sound = "./sound"
 
-path_csv     = "./csv"
-path_sound   = "./sound"
-
-
-for current_dir, _, files_list in os.walk(path_csv):
-    for file in files_list:
-        if os.path.splitext(file)[1] == ".csv":
-
-            # サウンド名と所属グループを取得
-            l_sound_name.append(os.path.splitext(file)[0])
-            l_content.append(os.path.split(current_dir)[-1])
-
-            # csvファイルの読み込み
-            df_tmp = pd.read_csv(os.path.join(current_dir, file))
-            l_data.append(list(df_tmp["Power (dB)"]))
-
-l_columns = list(df_tmp["Frequency (Hz)"])
-
-
-df_csv = pd.DataFrame({"sound_name":l_sound_name, "content":l_content})
-
-l_data = np.array(l_data).T
-df_csv = pd.concat([df_csv, pd.DataFrame(zip(*l_data), columns=l_columns)], axis=1)
-
-# 初めの3つのピークの最大値を100に合わせ、0以下は削除
-df_processing = df_csv
-df_processing.iloc[:,2:] = df_processing.iloc[:,2:].apply(lambda x: (x - max(x.iloc[6],x.iloc[12],x.iloc[18]) + 100), axis=1)
-df_processing.iloc[:,2:] = df_processing.iloc[:,2:].map(lambda x: max(x,0))
-
-# 特徴量をまとめたデータフレームを作成作成
-df_analysis = pd.DataFrame({
-    "sound_name" : df_csv["sound_name"],
-    "content"    : df_csv["content"]
-})
-
-# 最初の方のピークを特徴量に加える
-for i in range(7):
-    col_name = "peak_" + str(i)
-    amp_peak = df_processing.apply(lambda x: x.iloc[6*i+6], axis=1)
-    df_analysis[col_name] = amp_peak
-
-# 各周波数帯のピークを数える
-amp_threshold        = [0, 10, 20, 30, 40, 50, 60, 60, 70, 80, 90, 100, 110, 120]
-freq_threshold       = [ 500, 1000, 2000, 3000, 4000, 6000, 10000]
-freq_threshold_index = [  24,   49,   93,  140,  186,  279,   465]
-
-for freq_idx in range(len(freq_threshold)):
-    for amp_idx in range(len(amp_threshold)):
-        col_name = "count_" + str(freq_threshold[freq_idx]) + "_" + str(int(amp_threshold[amp_idx]*100))
-        if freq_idx == len(freq_threshold) - 1:
-            tmp = df_csv.iloc[:,2:].apply(lambda x: np.sum(x.iloc[freq_threshold_index[freq_idx]::6] > amp_threshold[amp_idx]), axis=1)
-        else:
-            tmp = df_csv.iloc[:,2:].apply(lambda x: np.sum(x.iloc[freq_threshold_index[freq_idx]:freq_threshold_index[freq_idx + 1]:6] > amp_threshold[amp_idx]), axis=1)
-        df_analysis[col_name] = tmp
-
-# 各列を正規化
-df_analysis.iloc[:,2:] = df_analysis.iloc[:,2:].apply(lambda x: (x - np.mean(x)) / np.std(x) if np.std(x)>0 else 0, axis=0)
-
-# T-SNE かけてみる
-mapper = manifold.TSNE(random_state=0)
-embedding_tsne = mapper.fit_transform(df_analysis.iloc[:,2:])
-
-# グラフ用にデータ生計
-embedding   = embedding_tsne
-
-df_graph = pd.DataFrame({
-    "sound_name"  : df_analysis["sound_name"],
-    "content"     : df_analysis["content"],
-    "embedding_x" : embedding[:,0]/np.max(np.abs(embedding_tsne[:, 0])),
-    "embedding_y" : embedding[:,1]/np.max(np.abs(embedding_tsne[:, 1]))
-})
-
-# 列をサウンド名、行を周波数にとったデータフレームを作成
-df_csv_t = df_csv.iloc[:,2:].T
-df_csv_t.columns = df_csv["sound_name"]
+# グラフ用データの読み込み
+df_graph = pd.read_csv("./DataFrame/df_graph.csv", index_col = 0)
+df_csv_t = pd.read_csv("./DataFrame/df_csv_t.csv", index_col = 0)
 
 # グラフ作る
 l_content = ['Sample', 'OSC', 'Leads','Plucked','ONII-CHAN Lead','ONII-CHAN Pluck']
