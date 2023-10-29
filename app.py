@@ -9,7 +9,7 @@ import wave #オーディオファイルを扱いたい場合インポートし�
 #import plotly.express as px
 import plotly.graph_objs as go
 
-import soundfile as sf
+#import soundfile as sf
 import sounddevice as sd
 
 #from scipy.io import wavfile  # install : conda install scipy
@@ -263,8 +263,8 @@ def sound(clickData):
             # mixer.music.play(1)  # wavを1回再生
     
             # soundfile
-            data, fs = sf.read(wav_file)
-            sd.play(data, fs)
+            # data, fs = sf.read(wav_file)
+            # aaaaasd.play(data, fs)
 
             # audio_aa = AudioSegment.from_wav(wav_file)
             # play(audio_aa)
