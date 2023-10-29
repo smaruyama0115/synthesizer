@@ -284,7 +284,13 @@ def sound(clickData):
             # mixer.init()  # mixerを初期化
             # mixer.music.load(wav_file)  # wavをロード
             # mixer.music.play(1)  # wavを1回再生
-    
+
+            pygame.mixer.pre_init(44100, -16, 2, 2048) # setup mixer to avoid sound lag
+            pygame.init()
+
+            effect = pygame.mixer.Sound('chime.wav')
+            effect.play()
+
             # soundfile
             # data, fs = sf.read(wav_file)
             # sd.play(data, fs)
@@ -292,7 +298,6 @@ def sound(clickData):
             # audio_aa = AudioSegment.from_wav(wav_file)
             # play(audio_aa)
 
-            os.system(f'omxplayer -o local {wav_file}')
 
             # スペクトルを表示
             fig_line = go.Figure()
