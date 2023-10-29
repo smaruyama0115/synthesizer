@@ -16,8 +16,10 @@ import plotly.graph_objs as go
 
 from scipy.io import wavfile  # install : conda install scipy
 
-import pygame
-from pygame import mixer      # pip install pygame
+# import pygame
+# from pygame import mixer      # pip install pygame
+
+import simpleaudio
 
 #pygame.init()
 #import pygame._sdl2.audio as sdl2_audio
@@ -283,9 +285,12 @@ def sound(clickData):
             wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
 
             # wavファイルをロードして再生
-            mixer.init()  # mixerを初期化
-            mixer.music.load(wav_file)  # wavをロード
-            mixer.music.play(1)  # wavを1回再生
+            #mixer.init()  # mixerを初期化
+            #mixer.music.load(wav_file)  # wavをロード
+            #mixer.music.play(1)  # wavを1回再生
+
+            wav_obj = simpleaudio.WaveObject.from_wave_file(wav_file)
+            play_obj = wav_obj.play()
 
             # pygame.mixer.pre_init(44100, -16, 2, 2048) # setup mixer to avoid sound lag
             # pygame.init()
