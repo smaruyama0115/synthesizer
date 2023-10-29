@@ -59,6 +59,7 @@ psutil==5.9.6
 ptyprocess==0.7.0
 pure-eval==0.2.2
 pyclustering==0.10.1.2
+pygame==2.5.2
 Pygments==2.16.1
 pynndescent==0.5.10
 pyparsing==3.1.1
