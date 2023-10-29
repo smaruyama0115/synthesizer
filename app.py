@@ -34,8 +34,8 @@ from pygame import mixer      # pip install pygame
 #import IPython.display
 #import dash
 
-# from pydub import AudioSegment
-# from pydub.playback import play
+from pydub import AudioSegment
+from pydub.playback import play
 
 # from playsound import playsound
 
@@ -285,18 +285,18 @@ def sound(clickData):
             # mixer.music.load(wav_file)  # wavをロード
             # mixer.music.play(1)  # wavを1回再生
 
-            pygame.mixer.pre_init(44100, -16, 2, 2048) # setup mixer to avoid sound lag
-            pygame.init()
+            # pygame.mixer.pre_init(44100, -16, 2, 2048) # setup mixer to avoid sound lag
+            # pygame.init()
 
-            effect = pygame.mixer.Sound(wav_file)
-            effect.play()
+            # effect = pygame.mixer.Sound(wav_file)
+            # effect.play()
 
             # soundfile
             # data, fs = sf.read(wav_file)
             # sd.play(data, fs)
 
-            # audio_aa = AudioSegment.from_wav(wav_file)
-            # play(audio_aa)
+            audio_aa = AudioSegment.from_wav(wav_file)
+            play(audio_aa)
 
 
             # スペクトルを表示
