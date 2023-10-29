@@ -11,19 +11,22 @@ import wave #オーディオファイルを扱いたい場合インポートし�
 #import plotly.express as px
 import plotly.graph_objs as go
 
-# import soundfile as sf
-# import sounddevice as sd
+import soundfile as sf
+import sounddevice as sd
 
 from scipy.io import wavfile  # install : conda install scipy
 
+# pygameを使う -> mixier.init()がありませんと言われる
 # import pygame
 # from pygame import mixer      # pip install pygame
 
-import simpleaudio
+# simpleaudioを使う -> pyproject.toml-based projects
+# import simpleaudio
 
 #pygame.init()
 #import pygame._sdl2.audio as sdl2_audio
 
+# pyaudio -> pyproject.toml-based projects
 
 # def get_devices(capture_devices = False):
 #     init_by_me = not pygame.mixer.get_init()
