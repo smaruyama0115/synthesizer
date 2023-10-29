@@ -10,6 +10,7 @@ from pygame import mixer      # pip install pygame
 from IPython.display import display, HTML
 import IPython.display
 
+import dash
 from dash import Dash, dcc, html, Input, Output, callback, callback_context
 
 import dash_bootstrap_components as dbc
