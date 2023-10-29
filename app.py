@@ -329,4 +329,4 @@ def sync_checklists(category_selected, all_selected, dropdown):
     return category_selected, all_selected, fig
 
 if __name__=='__main__':
-    app.run_server(debug=True, port=1238)
+    app.run_server(debug=True)
