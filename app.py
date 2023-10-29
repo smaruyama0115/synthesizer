@@ -288,7 +288,7 @@ def sound(clickData):
 
         if content != "Genre":
 
-            wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
+            wav_file   = os.path.join(BASE_DIR, path_sound, content , sound_name) + ".wav"
 
             # wavファイルをロードして再生
             #mixer.init()  # mixerを初期化
@@ -312,6 +312,7 @@ def sound(clickData):
             # play(audio_aa)
 
             # playsound.playsound(wav_file)
+            subprocess.Popen(['cwd'])
             subprocess.Popen(['aplay',wav_file])
 
             # スペクトルを表示
