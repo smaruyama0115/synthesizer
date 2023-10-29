@@ -2,14 +2,11 @@ import os
 import pandas as pd
 import numpy as np
 
-from sklearn import manifold
-
 import plotly.graph_objs as go
 
 import scipy.io.wavfile as wav # 今回はwaveモジュールではなくこれを用いる
 import sounddevice as sd
 
-import dash
 from dash import Dash, dcc, html, Input, Output, callback, callback_context
 
 import dash_bootstrap_components as dbc
@@ -333,4 +330,4 @@ def sync_checklists(category_selected, all_selected, dropdown):
     return category_selected, all_selected, fig
 
 if __name__=='__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, port=1239)
