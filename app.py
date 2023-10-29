@@ -55,7 +55,7 @@ from dash import Dash, dcc, html, Input, Output, callback, callback_context
 import dash_bootstrap_components as dbc
 
 # pathの設定
-path_sound = "./sound"
+path_sound = "/app/sound"
 
 # 使用する音源
 l_content       = ['Genre','Sample', 'OSC', 'Leads','ONII-CHAN Lead']
@@ -288,7 +288,8 @@ def sound(clickData):
 
         if content != "Genre":
 
-            wav_file   = os.path.join(BASE_DIR, path_sound, content , sound_name) + ".wav"
+            wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
+            print(wav_file)
 
             # wavファイルをロードして再生
             #mixer.init()  # mixerを初期化
