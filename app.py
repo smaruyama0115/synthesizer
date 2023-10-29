@@ -1,6 +1,8 @@
 import os
 import pandas as pd
 
+import base64
+
 import subprocess
 
 import numpy as np #NumPyは基本必須です。インポートしてください。
@@ -50,12 +52,12 @@ from scipy.io import wavfile  # install : conda install scipy
 # from playsound import playsound
 
 
-from dash import Dash, dcc, html, Input, Output, callback, callback_context
+from dash import Dash, dcc, html, Input, Output, callback, callback_context, clientside_callback
 
 import dash_bootstrap_components as dbc
 
 # pathの設定
-path_sound = "/app/sound"
+path_sound = "./sound"
 
 # 使用する音源
 l_content       = ['Genre','Sample', 'OSC', 'Leads','ONII-CHAN Lead']
@@ -102,6 +104,11 @@ dict_cluster_color ={
     13:"#C6B7A4",
     14:""
 }
+
+# mp3の変換？
+# Encode the local sound file.
+sound_filename = 'Test.wav'  # replace with your own .mp3 file
+encoded_sound = base64.b64encode(open(sound_filename, 'rb').read())
 
 # グラフ作る
 layout_scatter = go.Layout(
@@ -185,7 +192,6 @@ sidebar = html.Div(
     [
         dbc.Row(
         [
-            html.P(id='placeholder'),
             html.H5(
                 'Sound Visualizer',
                 className="ml-2 text-white font-italic"
@@ -229,7 +235,10 @@ sidebar = html.Div(
                         df_graph[df_graph["content"] != "Center"]["sound_name"], multi=True, id="dropdown")
                 ])
             ]
-        )
+        ),
+        dbc.Row([
+            html.Div(id="placeholder", style={"display": "none"})
+        ])
     ]
 )
 
@@ -275,12 +284,12 @@ app.layout = dbc.Container(
 
 @app.callback(
     Output("graph_line","figure"),
+    Output("placeholder","children"),
     Input("graph_scatter", "clickData")
 )
 def sound(clickData):
-
     fig_line = go.Figure()
-
+    audio    = ""
     if clickData:
 
         sound_name = clickData['points'][0]['text']
@@ -288,8 +297,9 @@ def sound(clickData):
 
         if content != "Genre":
 
-            wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
-            print(wav_file)
+            wav_file         = os.path.join(path_sound, content , sound_name) + ".wav"
+            wav_file_encoded = base64.b64encode(open(wav_file, 'rb').read())
+            # encoded_sound = base64.b64encode(open(wav_file , 'rb').read())
 
             # wavファイルをロードして再生
             #mixer.init()  # mixerを初期化
@@ -313,7 +323,7 @@ def sound(clickData):
             # play(audio_aa)
 
             # playsound.playsound(wav_file)
-            subprocess.Popen(['aplay',wav_file])
+            # subprocess.Popen(['aplay',wav_file])
 
             # スペクトルを表示
             fig_line = go.Figure()
@@ -324,9 +334,16 @@ def sound(clickData):
                 )
             )
 
+            audio = html.Audio(
+                id='audio-player2',
+                src='data:audio/mpeg;base64,{}'.format(wav_file_encoded.decode()),
+                controls=False,
+                autoPlay=True,
+            )
+
             fig_line.update_xaxes(type="log")
 
-    return fig_line
+    return fig_line, audio
 
 @callback(
     Output("category-checklist", "value"),
@@ -399,6 +416,21 @@ def sync_checklists(category_selected, all_selected, dropdown):
         ))
 
     return category_selected, all_selected, fig
+
+# app.clientside_callback(
+#     """
+#     function() {
+#       let audio = document.querySelector('#audio-player');
+#       // if (!audio){
+#       //  return -1;
+#       //}
+#       //audio.play();
+#       //return '';
+    
+#    }
+#     """, Output('placeholder', 'children'), [Input("graph_scatter", "clickData")],
+#     prevent_initial_call=True
+# )
 
 if __name__=='__main__':
     app.run_server(debug=True)
