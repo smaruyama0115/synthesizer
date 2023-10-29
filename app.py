@@ -11,12 +11,12 @@ import wave #オーディオファイルを扱いたい場合インポートし�
 #import plotly.express as px
 import plotly.graph_objs as go
 
-import soundfile as sf
-import sounddevice as sd
+# import soundfile as sf
+# import sounddevice as sd
 
 from scipy.io import wavfile  # install : conda install scipy
 
-#import pygame
+import pygame
 #pygame.init()
 #import pygame._sdl2.audio as sdl2_audio
 #from pygame import mixer      # pip install pygame
@@ -282,9 +282,9 @@ def sound(clickData):
             wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
 
             # wavファイルをロードして再生
-            # mixer.init()  # mixerを初期化
-            # mixer.music.load(wav_file)  # wavをロード
-            # mixer.music.play(1)  # wavを1回再生
+            mixer.init()  # mixerを初期化
+            mixer.music.load(wav_file)  # wavをロード
+            mixer.music.play(1)  # wavを1回再生
 
             # pygame.mixer.pre_init(44100, -16, 2, 2048) # setup mixer to avoid sound lag
             # pygame.init()
