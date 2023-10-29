@@ -281,9 +281,9 @@ def sound(clickData):
             wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
 
             # wavファイルをロードして再生
-            mixer.init()  # mixerを初期化
-            mixer.music.load(wav_file)  # wavをロード
-            mixer.music.play(1)  # wavを1回再生
+            # mixer.init()  # mixerを初期化
+            # mixer.music.load(wav_file)  # wavをロード
+            # mixer.music.play(1)  # wavを1回再生
     
             # soundfile
             # data, fs = sf.read(wav_file)
