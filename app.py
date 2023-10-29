@@ -9,8 +9,8 @@ import wave #オーディオファイルを扱いたい場合インポートし�
 #import plotly.express as px
 import plotly.graph_objs as go
 
-import soundfile as sf
-import sounddevice as sd
+# import soundfile as sf
+# import sounddevice as sd
 
 from scipy.io import wavfile  # install : conda install scipy
 
@@ -33,8 +33,8 @@ from scipy.io import wavfile  # install : conda install scipy
 #import IPython.display
 #import dash
 
-from pydub import AudioSegment
-from pydub.playback import play
+# from pydub import AudioSegment
+# from pydub.playback import play
 
 # from playsound import playsound
 
@@ -291,8 +291,8 @@ def sound(clickData):
             # effect.play()
 
             # soundfile
-            data, fs = sf.read(wav_file)
-            sd.play(data, fs)
+            # data, fs = sf.read(wav_file)
+            # sd.play(data, fs)
 
             # audio_aa = AudioSegment.from_wav(wav_file)
             # play(audio_aa)
