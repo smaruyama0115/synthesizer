@@ -5,6 +5,8 @@ import pandas as pd
 import numpy as np #NumPyは基本必須です。インポートしてください。
 import wave #オーディオファイルを扱いたい場合インポートしま
 
+import playsound
+
 #import plotly.offline as offline
 #import plotly.express as px
 import plotly.graph_objs as go
@@ -296,6 +298,8 @@ def sound(clickData):
 
             # audio_aa = AudioSegment.from_wav(wav_file)
             # play(audio_aa)
+
+            playsound.playsound(wav_file)
 
             # スペクトルを表示
             fig_line = go.Figure()
