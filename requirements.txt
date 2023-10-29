@@ -62,10 +62,8 @@ ptyprocess==0.7.0
 pure-eval==0.2.2
 pyclustering==0.10.1.2
 pycparser==2.21
-pygame==2.5.2
 Pygments==2.16.1
 pynndescent==0.5.10
-pyobjc==10.0
 pyobjc-core==10.0
 pyobjc-framework-Accessibility==10.0
 pyobjc-framework-Accounts==10.0
@@ -232,7 +230,6 @@ scipy==1.11.3
 seaborn==0.13.0
 six==1.16.0
 sounddevice==0.4.6
-soundfile==0.12.1
 stack-data==0.6.3
 tbb==2021.10.0
 tenacity==8.2.3
