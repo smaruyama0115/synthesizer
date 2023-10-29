@@ -4,8 +4,8 @@ import numpy as np
 
 import plotly.graph_objs as go
 
-import scipy.io.wavfile as wav # 今回はwaveモジュールではなくこれを用いる
 import sounddevice as sd
+import soundfile as sf
 
 from dash import Dash, dcc, html, Input, Output, callback, callback_context
 
@@ -241,8 +241,8 @@ def sound(clickData):
             wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
 
             # wavファイルをロードして再生
-            fs, data = wav.read(wav_file) # サンプリング周波数(fs)とデータを取得
-            sd.play(data, fs)
+            sig, sr = sf.read(wav_file, always_2d = True) # サンプリング周波数(fs)とデータを取得
+            sd.play(sig, sr)
     
             # スペクトルを表示
             fig_line = go.Figure()
