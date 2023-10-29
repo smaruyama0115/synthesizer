@@ -15,8 +15,9 @@ from scipy.io import wavfile  # install : conda install scipy
 
 import pygame
 pygame.init()
-
 import pygame._sdl2.audio as sdl2_audio
+from pygame import mixer      # pip install pygame
+
 
 # def get_devices(capture_devices = False):
 #     init_by_me = not pygame.mixer.get_init()
@@ -27,15 +28,12 @@ import pygame._sdl2.audio as sdl2_audio
 #         pygame.mixer.quit()
 #     return devices
 
-from pygame import mixer      # pip install pygame
-
-
 #from IPython.display import display, HTML
 #import IPython.display
 #import dash
 
-from pydub import AudioSegment
-from pydub.playback import play
+# from pydub import AudioSegment
+# from pydub.playback import play
 
 # from playsound import playsound
 
@@ -281,9 +279,9 @@ def sound(clickData):
             wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
 
             # wavファイルをロードして再生
-            # mixer.init()  # mixerを初期化
-            # mixer.music.load(wav_file)  # wavをロード
-            # mixer.music.play(1)  # wavを1回再生
+            mixer.init()  # mixerを初期化
+            mixer.music.load(wav_file)  # wavをロード
+            mixer.music.play(1)  # wavを1回再生
 
             # pygame.mixer.pre_init(44100, -16, 2, 2048) # setup mixer to avoid sound lag
             # pygame.init()
@@ -295,8 +293,8 @@ def sound(clickData):
             # data, fs = sf.read(wav_file)
             # sd.play(data, fs)
 
-            audio_aa = AudioSegment.from_wav(wav_file)
-            play(audio_aa)
+            # audio_aa = AudioSegment.from_wav(wav_file)
+            # play(audio_aa)
 
 
             # スペクトルを表示
