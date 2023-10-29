@@ -14,8 +14,10 @@ import plotly.graph_objs as go
 from scipy.io import wavfile  # install : conda install scipy
 
 import pygame
-from pygame import mixer      # pip install pygame
 pygame.init()
+
+from pygame import mixer      # pip install pygame
+
 
 #from IPython.display import display, HTML
 #import IPython.display
@@ -158,7 +160,6 @@ fig_line = go.Figure(layout = layout_line)
 # ダッシュボードに表示
 app = Dash(external_stylesheets=[dbc.themes.FLATLY])
 server = app.server
-
 sidebar = html.Div(
     [
         dbc.Row(
@@ -191,6 +192,11 @@ sidebar = html.Div(
             [
                 html.P(
                     'Search by Sound Name',
+                    style={'margin-top': '16px', 'margin-bottom': '4px'},
+                    className='font-weight-bold'
+                ),
+                html.P(
+                    pygame.mixer.get_dev_info(),
                     style={'margin-top': '16px', 'margin-bottom': '4px'},
                     className='font-weight-bold'
                 ),
