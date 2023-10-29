@@ -4,9 +4,8 @@ import numpy as np
 
 import plotly.graph_objs as go
 
-import sounddevice as sd
-import soundfile as sf
-import simpleaudio
+import wave
+import pygame.mixer as pymix
 
 from dash import Dash, dcc, html, Input, Output, callback, callback_context
 
@@ -240,12 +239,9 @@ def sound(clickData):
         if content != "Genre":
 
             wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
-
-            # wavファイルをロードして再生
-            # sig, sr = sf.read(wav_file, always_2d = True) # サンプリング周波数(fs)とデータを取得
-            # sd.play(sig, sr)
-            wav_obj = simpleaudio.WaveObject.from_wave_file(wav_file)
-            play_obj = wav_obj.play()
+            pymix.init(frequency = 44100, size = -16, channels = 2, buffer = 4096)
+            sounds = pymix.Sound(wav_file) # 再生ファイルを設定
+            channel = sounds.play(loops = 1) # 音楽再生(-1:無限ループ)
     
             # スペクトルを表示
             fig_line = go.Figure()
