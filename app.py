@@ -2,17 +2,22 @@ import os
 import pandas as pd
 import numpy as np
 
-import plotly.offline as offline
+#import plotly.offline as offline
+#import plotly.express as px
 import plotly.graph_objs as go
-import plotly.express as px
 
-from scipy.io import wavfile  # install : conda install scipy
-from pygame import mixer      # pip install pygame
+#from scipy.io import wavfile  # install : conda install scipy
+#from pygame import mixer      # pip install pygame
+#from IPython.display import display, HTML
+#import IPython.display
+#import dash
 
-from IPython.display import display, HTML
-import IPython.display
+from pydub import AudioSegment
+from pydub.playback import play
 
-import dash
+from pydub import AudioSegment
+from pydub.playback import play
+
 from dash import Dash, dcc, html, Input, Output, callback, callback_context
 
 import dash_bootstrap_components as dbc
@@ -247,10 +252,13 @@ def sound(clickData):
             wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
 
             # wavファイルをロードして再生
-            mixer.init()  # mixerを初期化
-            mixer.music.load(wav_file)  # wavをロード
-            mixer.music.play(1)  # wavを1回再生
+            #mixer.init()  # mixerを初期化
+            #mixer.music.load(wav_file)  # wavをロード
+            #mixer.music.play(1)  # wavを1回再生
     
+            audio_aa = AudioSegment.from_wav(wav_file)
+            play(audio_aa)
+
             # スペクトルを表示
             fig_line = go.Figure()
             fig_line.add_trace(
