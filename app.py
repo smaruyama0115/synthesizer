@@ -8,49 +8,9 @@ import subprocess
 import numpy as np #NumPyは基本必須です。インポートしてください。
 import wave #オーディオファイルを扱いたい場合インポートしま
 
-# import playsound
-
-#import plotly.offline as offline
-#import plotly.express as px
 import plotly.graph_objs as go
 
-# soundfile使う -> ものごい数のエラーが出る
-# import soundfile as sf
-# import sounddevice as sd
-
 from scipy.io import wavfile  # install : conda install scipy
-
-# pygameを使う -> mixier.init()がありませんと言われる
-# import pygame
-# from pygame import mixer      # pip install pygame
-
-# simpleaudioを使う -> pyproject.toml-based projects
-# import simpleaudio
-
-#pygame.init()
-#import pygame._sdl2.audio as sdl2_audio
-
-# pyaudio -> pyproject.toml-based projects
-
-# def get_devices(capture_devices = False):
-#     init_by_me = not pygame.mixer.get_init()
-#     if init_by_me:
-#         pygame.mixer.init()
-#     devices = tuple(sdl2_audio.get_audio_device_names(capture_devices))
-#     if init_by_me:
-#         pygame.mixer.quit()
-#     return devices
-
-#from IPython.display import display, HTML
-#import IPython.display
-#import dash
-
-# pydubを使う -> ffplayが必要
-# from pydub import AudioSegment
-# from pydub.playback import play
-
-# from playsound import playsound
-
 
 from dash import Dash, dcc, html, Input, Output, callback, callback_context, clientside_callback
 
@@ -105,7 +65,6 @@ dict_cluster_color ={
     14:""
 }
 
-# mp3の変換？
 # Encode the local sound file.
 sound_filename = 'Test.wav'  # replace with your own .mp3 file
 encoded_sound = base64.b64encode(open(sound_filename, 'rb').read())
@@ -215,14 +174,6 @@ sidebar = html.Div(
                 )
             ],
         ),
-        # dbc.Row(
-        #     [
-        #         html.P(
-        #             sdl2_audio.get_num_audio_devices(False),
-        #             style={'margin-top': '16px', 'margin-bottom': '4px'},
-        #             className='font-weight-bold')
-        #     ],
-        # ),
         dbc.Row(
             [
                 html.P(
@@ -299,31 +250,6 @@ def sound(clickData):
 
             wav_file         = os.path.join(path_sound, content , sound_name) + ".wav"
             wav_file_encoded = base64.b64encode(open(wav_file, 'rb').read())
-            # encoded_sound = base64.b64encode(open(wav_file , 'rb').read())
-
-            # wavファイルをロードして再生
-            #mixer.init()  # mixerを初期化
-            #mixer.music.load(wav_file)  # wavをロード
-            #mixer.music.play(1)  # wavを1回再生
-
-            # wav_obj = simpleaudio.WaveObject.from_wave_file(wav_file)
-            # play_obj = wav_obj.play()
-
-            # pygame.mixer.pre_init(44100, -16, 2, 2048) # setup mixer to avoid sound lag
-            # pygame.init()
-
-            # effect = pygame.mixer.Sound(wav_file)
-            # effect.play()
-
-            # soundfile
-            # data, fs = sf.read(wav_file)
-            # sd.play(data, fs)
-
-            # audio_aa = AudioSegment.from_wav(wav_file)
-            # play(audio_aa)
-
-            # playsound.playsound(wav_file)
-            # subprocess.Popen(['aplay',wav_file])
 
             # スペクトルを表示
             fig_line = go.Figure()
@@ -417,20 +343,5 @@ def sync_checklists(category_selected, all_selected, dropdown):
 
     return category_selected, all_selected, fig
 
-# app.clientside_callback(
-#     """
-#     function() {
-#       let audio = document.querySelector('#audio-player');
-#       // if (!audio){
-#       //  return -1;
-#       //}
-#       //audio.play();
-#       //return '';
-    
-#    }
-#     """, Output('placeholder', 'children'), [Input("graph_scatter", "clickData")],
-#     prevent_initial_call=True
-# )
-
 if __name__=='__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, port = int(os.environ.get('PORT', 1238)))
