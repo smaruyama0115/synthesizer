@@ -208,11 +208,6 @@ sidebar = html.Div(
                     style={'margin-top': '16px', 'margin-bottom': '4px'},
                     className='font-weight-bold'
                 ),
-                html.P(
-                    pygame.mixer.get_dev_info(),
-                    style={'margin-top': '16px', 'margin-bottom': '4px'},
-                    className='font-weight-bold'
-                ),
                 html.Div([
                     dcc.Dropdown(
                         df_graph[df_graph["content"] != "Center"]["sound_name"], multi=True, id="dropdown")
