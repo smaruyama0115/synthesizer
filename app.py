@@ -4,6 +4,7 @@ import numpy as np
 
 import plotly.offline as offline
 import plotly.graph_objs as go
+import plotly.express as px
 
 from scipy.io import wavfile  # install : conda install scipy
 from pygame import mixer      # pip install pygame
