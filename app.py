@@ -202,7 +202,7 @@ sidebar = html.Div(
         dbc.Row(
             [
                 html.P(
-                    get_devices {get_devices(False),
+                    get_devices(False),
                     style={'margin-top': '16px', 'margin-bottom': '4px'},
                     className='font-weight-bold')
             ],
