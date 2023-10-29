@@ -7,6 +7,9 @@ import plotly.graph_objs as go
 from scipy.io import wavfile  # install : conda install scipy
 from pygame import mixer      # pip install pygame
 
+from IPython.display import display, HTML
+import IPython.display
+
 from dash import Dash, dcc, html, Input, Output, callback, callback_context
 
 import dash_bootstrap_components as dbc
