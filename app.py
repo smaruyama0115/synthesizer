@@ -264,7 +264,7 @@ def sound(clickData):
     
             # soundfile
             # data, fs = sf.read(wav_file)
-            # aaaaasd.play(data, fs)
+            # sd.play(data, fs)
 
             # audio_aa = AudioSegment.from_wav(wav_file)
             # play(audio_aa)
