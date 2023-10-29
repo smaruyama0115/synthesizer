@@ -16,6 +16,19 @@ from scipy.io import wavfile  # install : conda install scipy
 import pygame
 pygame.init()
 
+import pygame._sdl2.audio as sdl2_audio
+
+def get_devices(capture_devices = False):
+    init_by_me = not pygame.mixer.get_init()
+    if init_by_me:
+        pygame.mixer.init()
+    devices = tuple(sdl2_audio.get_audio_device_names(capture_devices))
+    if init_by_me:
+        pygame.mixer.quit()
+    return devices
+
+print(f"get_devices {get_devices}")
+
 from pygame import mixer      # pip install pygame
 
 
