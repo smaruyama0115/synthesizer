@@ -7,7 +7,7 @@ import numpy as np
 import plotly.graph_objs as go
 
 #from scipy.io import wavfile  # install : conda install scipy
-#from pygame import mixer      # pip install pygame
+from pygame import mixer      # pip install pygame
 #from IPython.display import display, HTML
 #import IPython.display
 #import dash
@@ -15,7 +15,7 @@ import plotly.graph_objs as go
 # from pydub import AudioSegment
 # from pydub.playback import play
 
-from playsound import playsound
+# from playsound import playsound
 
 
 from dash import Dash, dcc, html, Input, Output, callback, callback_context
@@ -252,14 +252,12 @@ def sound(clickData):
             wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
 
             # wavファイルをロードして再生
-            #mixer.init()  # mixerを初期化
-            #mixer.music.load(wav_file)  # wavをロード
-            #mixer.music.play(1)  # wavを1回再生
+            mixer.init()  # mixerを初期化
+            mixer.music.load(wav_file)  # wavをロード
+            mixer.music.play(1)  # wavを1回再生
     
             # audio_aa = AudioSegment.from_wav(wav_file)
             # play(audio_aa)
-
-            playsound(wav_file)
 
             # スペクトルを表示
             fig_line = go.Figure()
