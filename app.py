@@ -259,7 +259,7 @@ def sound(clickData):
             # audio_aa = AudioSegment.from_wav(wav_file)
             # play(audio_aa)
 
-            playsound('Music1.mp3')
+            playsound(wav_file)
 
             # スペクトルを表示
             fig_line = go.Figure()
