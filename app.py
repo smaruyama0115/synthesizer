@@ -1,6 +1,7 @@
 import os
 import pandas as pd
-#import subprocess
+
+import subprocess
 
 import numpy as np #NumPyは基本必須です。インポートしてください。
 import wave #オーディオファイルを扱いたい場合インポートしま
@@ -294,8 +295,8 @@ def sound(clickData):
             #mixer.music.load(wav_file)  # wavをロード
             #mixer.music.play(1)  # wavを1回再生
 
-            wav_obj = simpleaudio.WaveObject.from_wave_file(wav_file)
-            play_obj = wav_obj.play()
+            # wav_obj = simpleaudio.WaveObject.from_wave_file(wav_file)
+            # play_obj = wav_obj.play()
 
             # pygame.mixer.pre_init(44100, -16, 2, 2048) # setup mixer to avoid sound lag
             # pygame.init()
@@ -311,6 +312,8 @@ def sound(clickData):
             # play(audio_aa)
 
             # playsound.playsound(wav_file)
+
+            subprocess.call(["aplay",wav_file)
 
             # スペクトルを表示
             fig_line = go.Figure()
