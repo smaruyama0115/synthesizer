@@ -1,7 +1,6 @@
 import os
 import pandas as pd
 
-import sounddevice as sd
 import numpy as np #NumPyは基本必須です。インポートしてください。
 import wave #オーディオファイルを扱いたい場合インポートしま
 
