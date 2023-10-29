@@ -288,7 +288,7 @@ def sound(clickData):
             pygame.mixer.pre_init(44100, -16, 2, 2048) # setup mixer to avoid sound lag
             pygame.init()
 
-            effect = pygame.mixer.Sound('chime.wav')
+            effect = pygame.mixer.Sound(wav_file)
             effect.play()
 
             # soundfile
