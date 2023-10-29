@@ -240,7 +240,7 @@ def sound(clickData):
 
         if content != "Genre":
 
-            wav_file   = os.path.join("sound", content , sound_name) + ".wav"
+            wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
 
             # wavファイルをロードして再生
             mixer.init()  # mixerを初期化
@@ -333,4 +333,4 @@ def sync_checklists(category_selected, all_selected, dropdown):
     return category_selected, all_selected, fig
 
 if __name__=='__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False, port = 1256)
