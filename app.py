@@ -85,11 +85,11 @@ layout_scatter = go.Layout(
         paper_bgcolor='rgba(0,0,0,0)',
         xaxis = {
             "title":None,
-            "range":[-1.2,1.2]
+            "range":[-1.1,1.1]
         },
         yaxis = {
             "title":None,
-            "range":[-1.2,1.2]
+            "range":[-1.1,1.1]
         }
     )
 
