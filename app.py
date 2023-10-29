@@ -12,7 +12,11 @@ import plotly.graph_objs as go
 #import sounddevice as sd
 
 from scipy.io import wavfile  # install : conda install scipy
+
+import pygame
 from pygame import mixer      # pip install pygame
+pygame.init()
+
 #from IPython.display import display, HTML
 #import IPython.display
 #import dash
