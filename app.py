@@ -17,8 +17,9 @@ import plotly.offline as offline
 import plotly.graph_objs as go
 import plotly.express as px
 
+
 from scipy.io import wavfile  # install : conda install scipy
-# from pygame import mixer      # pip install pygame
+from pygame import mixer      # pip install pygame
 
 import dash
 from dash import Dash, dcc, html, Input, Output, State, callback, callback_context
@@ -28,12 +29,16 @@ import dash_bootstrap_components as dbc
 # pathの設定
 path_sound = "./sound"
 
+# 使用する音源
+# l_content = ['Sample', 'OSC', 'Leads','Plucked','ONII-CHAN Lead','ONII-CHAN Pluck']
+l_content      = ['Sample', 'OSC', 'Leads','ONII-CHAN Lead']
+l_content_init = ['Sample', 'OSC', 'Leads','ONII-CHAN Lead']
+
 # グラフ用データの読み込み
 df_graph = pd.read_csv("./DataFrame/df_graph.csv", index_col = 0)
 df_csv_t = pd.read_csv("./DataFrame/df_csv_t.csv", index_col = 0)
 
 # グラフ作る
-l_content = ['Sample', 'OSC', 'Leads','Plucked','ONII-CHAN Lead','ONII-CHAN Pluck']
 
 layout_scatter = go.Layout(
         title={
@@ -109,7 +114,7 @@ sidebar = html.Div(
                 html.Div(
                     [
                         dcc.Checklist(["All"], ['All'], id="all-checklist", inline=True),
-                        dcc.Checklist(l_content, l_content, id="category-checklist",inline=False),
+                        dcc.Checklist(l_content, l_content_init, id="category-checklist",inline=False),
                     ],
                     style={'margin-left': '8px'},
                 )
@@ -187,9 +192,9 @@ def sound(clickData):
         wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
 
         # # wavファイルをロードして再生
-        # mixer.init()  # mixerを初期化
-        # mixer.music.load(wav_file)  # wavをロード
-        # mixer.music.play(1)  # wavを1回再生
+        mixer.init()  # mixerを初期化
+        mixer.music.load(wav_file)  # wavをロード
+        mixer.music.play(1)  # wavを1回再生
     
         fig_line = go.Figure()
         fig_line.add_trace(
@@ -250,9 +255,6 @@ def sync_checklists(category_selected, all_selected, dropdown):
         ))
 
     return category_selected, all_selected, fig
-
-# port = int(os.environ.get("PORT", 5000))
-# app.run_server(debug=True, port=port)
 
 if __name__=='__main__':
     app.run_server(debug=True)
