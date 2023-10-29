@@ -6,6 +6,7 @@ import plotly.graph_objs as go
 
 import sounddevice as sd
 import soundfile as sf
+import simpleaudio
 
 from dash import Dash, dcc, html, Input, Output, callback, callback_context
 
@@ -241,8 +242,10 @@ def sound(clickData):
             wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
 
             # wavファイルをロードして再生
-            sig, sr = sf.read(wav_file, always_2d = True) # サンプリング周波数(fs)とデータを取得
-            sd.play(sig, sr)
+            # sig, sr = sf.read(wav_file, always_2d = True) # サンプリング周波数(fs)とデータを取得
+            # sd.play(sig, sr)
+            wav_obj = simpleaudio.WaveObject.from_wave_file(wav_file)
+            play_obj = wav_obj.play()
     
             # スペクトルを表示
             fig_line = go.Figure()
