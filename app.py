@@ -18,14 +18,14 @@ pygame.init()
 
 import pygame._sdl2.audio as sdl2_audio
 
-def get_devices(capture_devices = False):
-    init_by_me = not pygame.mixer.get_init()
-    if init_by_me:
-        pygame.mixer.init()
-    devices = tuple(sdl2_audio.get_audio_device_names(capture_devices))
-    if init_by_me:
-        pygame.mixer.quit()
-    return devices
+# def get_devices(capture_devices = False):
+#     init_by_me = not pygame.mixer.get_init()
+#     if init_by_me:
+#         pygame.mixer.init()
+#     devices = tuple(sdl2_audio.get_audio_device_names(capture_devices))
+#     if init_by_me:
+#         pygame.mixer.quit()
+#     return devices
 
 from pygame import mixer      # pip install pygame
 
@@ -202,7 +202,7 @@ sidebar = html.Div(
         dbc.Row(
             [
                 html.P(
-                    get_devices(False),
+                    sdl2_audio.get_audio_device_names(),
                     style={'margin-top': '16px', 'margin-bottom': '4px'},
                     className='font-weight-bold')
             ],
