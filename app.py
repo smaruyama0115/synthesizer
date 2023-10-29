@@ -6,7 +6,8 @@ from sklearn import manifold
 
 import plotly.graph_objs as go
 
-from pygame import mixer      # pip install pygame
+import scipy.io.wavfile as wav # 今回はwaveモジュールではなくこれを用いる
+import sounddevice as sd
 
 import dash
 from dash import Dash, dcc, html, Input, Output, callback, callback_context
@@ -243,9 +244,8 @@ def sound(clickData):
             wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
 
             # wavファイルをロードして再生
-            mixer.init()  # mixerを初期化
-            mixer.music.load(wav_file)  # wavをロード
-            mixer.music.play(1)  # wavを1回再生
+            fs, data = wav.read(wav_file) # サンプリング周波数(fs)とデータを取得
+            sd.play(data, fs)
     
             # スペクトルを表示
             fig_line = go.Figure()
