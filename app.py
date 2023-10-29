@@ -4,8 +4,8 @@ import numpy as np
 
 import plotly.graph_objs as go
 
-import wave
-import pygame.mixer as pymix
+from scipy.io import wavfile  # install : conda install scipy
+from pygame import mixer      # pip install pygame
 
 from dash import Dash, dcc, html, Input, Output, callback, callback_context
 
@@ -238,10 +238,10 @@ def sound(clickData):
 
         if content != "Genre":
 
-            wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
-            pymix.init(frequency = 44100, size = -16, channels = 2, buffer = 4096)
-            sounds = pymix.Sound(wav_file) # 再生ファイルを設定
-            channel = sounds.play(loops = 1) # 音楽再生(-1:無限ループ)
+            # wavファイルをロードして再生
+            mixer.init()  # mixerを初期化
+            mixer.music.load(wav_file)  # wavをロード
+            mixer.music.play(1)  # wavを1回再生
     
             # スペクトルを表示
             fig_line = go.Figure()
@@ -329,4 +329,4 @@ def sync_checklists(category_selected, all_selected, dropdown):
     return category_selected, all_selected, fig
 
 if __name__=='__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, port=1238)
