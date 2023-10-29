@@ -1,6 +1,9 @@
 import os
 import pandas as pd
-import numpy as np
+
+import sounddevice as sd
+import numpy as np #NumPyは基本必須です。インポートしてください。
+import wave #オーディオファイルを扱いたい場合インポートしま
 
 #import plotly.offline as offline
 #import plotly.express as px
