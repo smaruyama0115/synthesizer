@@ -17,9 +17,10 @@ import plotly.graph_objs as go
 from scipy.io import wavfile  # install : conda install scipy
 
 import pygame
+from pygame import mixer      # pip install pygame
+
 #pygame.init()
 #import pygame._sdl2.audio as sdl2_audio
-#from pygame import mixer      # pip install pygame
 
 
 # def get_devices(capture_devices = False):
