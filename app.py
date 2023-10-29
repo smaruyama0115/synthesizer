@@ -11,8 +11,9 @@ import wave #オーディオファイルを扱いたい場合インポートし�
 #import plotly.express as px
 import plotly.graph_objs as go
 
-import soundfile as sf
-import sounddevice as sd
+# soundfile使う -> ものごい数のエラーが出る
+# import soundfile as sf
+# import sounddevice as sd
 
 from scipy.io import wavfile  # install : conda install scipy
 
@@ -41,6 +42,7 @@ from scipy.io import wavfile  # install : conda install scipy
 #import IPython.display
 #import dash
 
+# pydubを使う -> ffplayが必要
 # from pydub import AudioSegment
 # from pydub.playback import play
 
