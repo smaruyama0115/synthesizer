@@ -199,14 +199,14 @@ sidebar = html.Div(
                 )
             ],
         ),
-        dbc.Row(
-            [
-                html.P(
-                    sdl2_audio.get_audio_device_names(),
-                    style={'margin-top': '16px', 'margin-bottom': '4px'},
-                    className='font-weight-bold')
-            ],
-        ),
+        # dbc.Row(
+        #     [
+        #         html.P(
+        #             sdl2_audio.get_num_audio_devices(False),
+        #             style={'margin-top': '16px', 'margin-bottom': '4px'},
+        #             className='font-weight-bold')
+        #     ],
+        # ),
         dbc.Row(
             [
                 html.P(
@@ -291,6 +291,8 @@ def sound(clickData):
 
             # audio_aa = AudioSegment.from_wav(wav_file)
             # play(audio_aa)
+
+            os.system(f'omxplayer -o local {wav_file}')
 
             # スペクトルを表示
             fig_line = go.Figure()
