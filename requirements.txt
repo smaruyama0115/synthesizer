@@ -36,6 +36,7 @@ plotly==5.18.0
 prompt-toolkit==3.0.39
 ptyprocess==0.7.0
 pure-eval==0.2.2
+PyAudio==0.2.13
 pycparser==2.21
 pygame==2.5.2
 Pygments==2.16.1
