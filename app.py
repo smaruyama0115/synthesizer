@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import numpy as np
 
+import plotly.offline as offline
 import plotly.graph_objs as go
 
 from scipy.io import wavfile  # install : conda install scipy
