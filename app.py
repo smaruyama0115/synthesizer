@@ -12,11 +12,11 @@ import plotly.graph_objs as go
 #import IPython.display
 #import dash
 
-from pydub import AudioSegment
-from pydub.playback import play
+# from pydub import AudioSegment
+# from pydub.playback import play
 
-from pydub import AudioSegment
-from pydub.playback import play
+from playsound import playsound
+
 
 from dash import Dash, dcc, html, Input, Output, callback, callback_context
 
@@ -256,8 +256,10 @@ def sound(clickData):
             #mixer.music.load(wav_file)  # wavをロード
             #mixer.music.play(1)  # wavを1回再生
     
-            audio_aa = AudioSegment.from_wav(wav_file)
-            play(audio_aa)
+            # audio_aa = AudioSegment.from_wav(wav_file)
+            # play(audio_aa)
+
+            playsound('Music1.mp3')
 
             # スペクトルを表示
             fig_line = go.Figure()
