@@ -312,7 +312,7 @@ def sound(clickData):
             # play(audio_aa)
 
             # playsound.playsound(wav_file)
-d            subprocess.Popen(['aplay', wav_file])
+d           subprocess.Popen(['aplay',wav_file])
 
             # スペクトルを表示
             fig_line = go.Figure()
