@@ -27,8 +27,6 @@ def get_devices(capture_devices = False):
         pygame.mixer.quit()
     return devices
 
-print(f"get_devices {get_devices(False)}")
-
 from pygame import mixer      # pip install pygame
 
 
@@ -199,6 +197,14 @@ sidebar = html.Div(
                     ],
                     style={'margin-left': '8px'},
                 )
+            ],
+        ),
+        dbc.Row(
+            [
+                html.P(
+                    get_devices {get_devices(False),
+                    style={'margin-top': '16px', 'margin-bottom': '4px'},
+                    className='font-weight-bold')
             ],
         ),
         dbc.Row(
