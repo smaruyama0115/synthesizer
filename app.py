@@ -244,6 +244,8 @@ def sound(clickData):
 
         if content != "Genre":
 
+            wav_file   = os.path.join(path_sound, content , sound_name) + ".wav"
+
             # wavファイルをロードして再生
             mixer.init()  # mixerを初期化
             mixer.music.load(wav_file)  # wavをロード
