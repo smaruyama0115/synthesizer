@@ -21,12 +21,14 @@ path_sound = "./sound"
 # 使用する音源
 
 if os.environ.get('USE_ALL_SOUNDS', False):
-    l_content       = ['Genre','Sample','KOMPLETE','OSC', 'Leads','Synth','Plucked','ONII-CHAN Lead','ONII-CHAN Pluck','NextLight Serum Free LD','Noise']
-    l_content_color = ["","#EFCAD6","#658080","#70C5CA","#8CA231","#E2DA56","#BA2320","#924727","red","black","yellow"]
+    l_content       = ['Genre','Sample','KOMPLETE','OSC', 'Leads','ONII-CHAN Lead','NextLight Serum Free LD','Synth','ONII-CHAN Chord','Plucked','ONII-CHAN Pluck',"ONII-CHAN Pad",'Noise']
+    l_content_color = ["","#EFCAD6","#658080","#70C5CA","#8CA231","#E2DA56","#BA2320","#924727","#68230D","#B032EB","#A8CC8C", "#CE306A","#6B2220"]
+    l_content_init  = ['Genre', 'Sample', 'KOMPLETE', 'OSC']
 else:
     # 本番環境で使う音源をここに書く
     l_content       = ['Genre','Sample', 'OSC', 'Leads','ONII-CHAN Lead']
     l_content_color = ["","#EFCAD6","#658080","#70C5CA","#E2DA56",]
+    l_content_init  = ['Genre', 'Sample', 'KOMPLETE', 'OSC']
 
 # グラフ用データの読み込み
 df_graph = pd.read_csv("./DataFrame/df_graph.csv", index_col = 0)
@@ -58,20 +60,20 @@ dict_cluster_name ={
 }
 
 dict_cluster_color ={
-    0:"#68230D",
-    1:"#B032EB",
+    0:"black",
+    1:"black",
     2:"black",
     3:"black",
-    4:"#A8CC8C",
-    5:"#1899D3",
-    6:"#8A8FF8",
+    4:"black",
+    5:"black",
+    6:"black",
     7:"black",
     8:"black",
-    9:"#DEC63D",
+    9:"black",
     10:"black",
     11:"black",
-    12:"#549BCE",
-    13:"#C6B7A4",
+    12:"black",
+    13:"black",
     14:"black",
     15:"black",
     16:"black",
@@ -178,8 +180,8 @@ sidebar = html.Div(
                     className='font-weight-bold'),
                 html.Div(
                     [
-                        dcc.Checklist(["All"], ['All'], id="all-checklist", inline=True),
-                        dcc.Checklist(l_content, l_content, id="category-checklist",inline=False),
+                        dcc.Checklist(["All"], [], id="all-checklist", inline=True),
+                        dcc.Checklist(l_content, l_content_init, id="category-checklist",inline=False),
                     ],
                     style={'margin-left': '8px'},
                 )
@@ -344,10 +346,10 @@ def sync_checklists(category_selected, all_selected, dropdown):
             y = df_graph_dropdown["embedding_y"],
             mode = 'markers',
             marker = {
-                "color" : "green",
+                "color" : "red",
                 "size"  : 15
             },
-            text = df_graph_dropdown.index.values,
+            text = df_graph_dropdown["sound_name"],
             hovertemplate = "%{text}",
             name = "Search Result"
         ))
