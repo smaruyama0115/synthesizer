@@ -1,27 +1,32 @@
+# ライブラリの読み込み
 import os
+
+import numpy as np
 import pandas as pd
 
+from scipy.io import wavfile
+import wave
 import base64
 
-import subprocess
-
-import numpy as np #NumPyは基本必須です。インポートしてください。
-import wave #オーディオファイルを扱いたい場合インポートしま
-
 import plotly.graph_objs as go
-
-from scipy.io import wavfile  # install : conda install scipy
-
 from dash import Dash, dcc, html, Input, Output, callback, callback_context, clientside_callback
-
 import dash_bootstrap_components as dbc
+
+from dotenv import load_dotenv
+load_dotenv(".env")
 
 # pathの設定
 path_sound = "./sound"
 
 # 使用する音源
-l_content       = ['Genre','Sample', 'OSC', 'Leads','ONII-CHAN Lead']
-l_content_color = ["","#EFCAD6","#658080","#70C5CA","#E2DA56",]
+
+if os.environ.get('USE_ALL_SOUNDS', False):
+    l_content       = ['Genre','Sample','KOMPLETE','OSC', 'Leads','Synth','Plucked','ONII-CHAN Lead','ONII-CHAN Pluck','NextLight Serum Free LD','Noise']
+    l_content_color = ["","#EFCAD6","#658080","#70C5CA","#8CA231","#E2DA56","#BA2320","#924727","red","black","yellow"]
+else:
+    # 本番環境で使う音源をここに書く
+    l_content       = ['Genre','Sample', 'OSC', 'Leads','ONII-CHAN Lead']
+    l_content_color = ["","#EFCAD6","#658080","#70C5CA","#E2DA56",]
 
 # グラフ用データの読み込み
 df_graph = pd.read_csv("./DataFrame/df_graph.csv", index_col = 0)
@@ -32,42 +37,48 @@ df_csv_t = pd.read_csv("./DataFrame/df_csv_t.csv", index_col = 0)
 dict_cluster_name ={
     0: "Saw",
     1: "Square",
-    2: "Non Genre",
-    3: "Non Genre",
+    2: "Cluster2",
+    3: "Cluster3",
     4: "Hard Synth",
     5: "Flute",
     6: "Organ",
-    7: "Non Genre",
-    8: "Non Genre",
+    7: "Cluster7",
+    8: "Cluster8",
     9: "Synth",
-    10: "Non Genre",
-    11: "Non Genre",
+    10: "Cluster10",
+    11: "Cluster11",
     12: "Brass",
     13: "Piano",
-    14: "Non Genre"
+    14: "Cluster14",
+    15: "Cluster15",
+    16: "Cluster16",
+    17: "Cluster17",
+    18: "Cluster18",
+    19: "Cluster19"
 }
 
 dict_cluster_color ={
     0:"#68230D",
     1:"#B032EB",
-    2:"",
-    3:"",
+    2:"black",
+    3:"black",
     4:"#A8CC8C",
     5:"#1899D3",
     6:"#8A8FF8",
-    7:"",
-    8:"",
+    7:"black",
+    8:"black",
     9:"#DEC63D",
-    10:"",
-    11:"",
+    10:"black",
+    11:"black",
     12:"#549BCE",
     13:"#C6B7A4",
-    14:""
+    14:"black",
+    15:"black",
+    16:"black",
+    17:"black",
+    18:"black",
+    19:"black"
 }
-
-# Encode the local sound file.
-sound_filename = 'Test.wav'  # replace with your own .mp3 file
-encoded_sound = base64.b64encode(open(sound_filename, 'rb').read())
 
 # グラフ作る
 layout_scatter = go.Layout(
