@@ -13,72 +13,32 @@ import dash_bootstrap_components as dbc
 from dotenv import load_dotenv
 load_dotenv(".env")
 
-# pathの設定
-path_sound = "./sound"
+# 各種設定
+use_date        = "20231030_174622" # 読み込むデータフレームのフォルダ
+path_sound      = "./sound"         # サウンドフォルダのパス
+size_threshhold = 10                 # 表示させないクラスタのサイズ
+size_multiple   = 1.5               # クラスタの大きさを決める係数
 
 # 使用する音源
 
-if os.environ.get('USE_ALL_SOUNDS', False):
-    l_content       = ['Genre','Sample','KOMPLETE','OSC', 'Leads','ONII-CHAN Lead','NextLight Serum Free LD','Synth','ONII-CHAN Chord','Plucked','ONII-CHAN Pluck',"ONII-CHAN Pad",'Noise']
-    l_content_color = ["","#EFCAD6","#658080","#70C5CA","#8CA231","#E2DA56","#BA2320","#924727","#68230D","#B032EB","#A8CC8C", "#CE306A","#6B2220"]
-    l_content_init  = ['Genre', 'Sample', 'KOMPLETE', 'OSC']
-else:
-    # 本番環境で使う音源をここに書く
-    l_content       = ['Genre','Sample', 'OSC', 'Leads','ONII-CHAN Lead']
-    l_content_color = ["","#EFCAD6","#658080","#70C5CA","#E2DA56",]
-    l_content_init  = ['Genre', 'Sample', 'KOMPLETE', 'OSC']
+# if os.environ.get('USE_ALL_SOUNDS', False):
+#     l_content       = ['Genre','Sample','KOMPLETE','OSC', 'Leads','ONII-CHAN Lead','NextLight Serum Free LD','Synth','Bass','NextLight Serum Free BA','ONII-CHAN Chord','Plucked','ONII-CHAN Pluck',"ONII-CHAN Pad",'Noise']
+#     l_content_color = ["","#EFCAD6","#658080","#70C5CA","#8CA231","#E2DA56","#BA2320","#924727","#68230D","#B032EB","#A8CC8C", "#CE306A","#6B2220","#FFF4D6","#F9A801"]
+#     l_content_init  = ['Genre', 'Sample', 'KOMPLETE', 'OSC', 'Leads']
+# else:
+#     # 本番環境で使う音源をここに書く
+#     l_content       = ['Genre','Sample', 'OSC', 'Leads','ONII-CHAN Lead']
+#     l_content_color = ["","#EFCAD6","#658080","#70C5CA","#E2DA56",]
+#     l_content_init  = ['Genre', 'Sample', 'KOMPLETE', 'OSC']
+
+l_content       = ['Genre','Sample','KOMPLETE','OSC', 'Leads','ONII-CHAN Lead','NextLight Serum Free LD','Synth','Bass','NextLight Serum Free BA','ONII-CHAN Chord','Plucked','ONII-CHAN Pluck',"ONII-CHAN Pad",'Noise']
+l_content_color = ["","#EFCAD6","#658080","#70C5CA","#8CA231","#E2DA56","#BA2320","#924727","#68230D","#B032EB","#A8CC8C", "#CE306A","#6B2220","#FFF4D6","#F9A801"]
+l_content_init  = ['Genre', 'Sample', 'KOMPLETE', 'OSC', 'Leads']
 
 # グラフ用データの読み込み
-df_graph = pd.read_csv("./DataFrame/df_graph.csv", index_col = 0)
-df_csv_t = pd.read_csv("./DataFrame/df_csv_t.csv", index_col = 0)
-
-# クラスタの特徴量
-
-dict_cluster_name ={
-    0: "Saw",
-    1: "Square",
-    2: "Cluster2",
-    3: "Cluster3",
-    4: "Hard Synth",
-    5: "Flute",
-    6: "Organ",
-    7: "Cluster7",
-    8: "Cluster8",
-    9: "Synth",
-    10: "Cluster10",
-    11: "Cluster11",
-    12: "Brass",
-    13: "Piano",
-    14: "Cluster14",
-    15: "Cluster15",
-    16: "Cluster16",
-    17: "Cluster17",
-    18: "Cluster18",
-    19: "Cluster19"
-}
-
-dict_cluster_color ={
-    0:"black",
-    1:"black",
-    2:"black",
-    3:"black",
-    4:"black",
-    5:"black",
-    6:"black",
-    7:"black",
-    8:"black",
-    9:"black",
-    10:"black",
-    11:"black",
-    12:"black",
-    13:"black",
-    14:"black",
-    15:"black",
-    16:"black",
-    17:"black",
-    18:"black",
-    19:"black"
-}
+df_graph   = pd.read_csv("./DataFrame/" + use_date + "/df_graph.csv",   index_col = 0)
+df_csv_t   = pd.read_csv("./DataFrame/" + use_date + "/df_csv_t.csv",   index_col = 0)
+df_cluster = pd.read_csv("./DataFrame/" + use_date + "/df_cluster.csv", index_col = 0)
 
 # グラフ作る
 layout_scatter = go.Layout(
@@ -136,18 +96,18 @@ if "Genre" in l_content:
     for cluster_name, cluster_id in zip(df_only_center["sound_name"], df_only_center["cluster"]):
 
         # Genre領域のサイズを決定
-        size = df_graph[df_graph["cluster"] == cluster_id].shape[0]
-        if size < 10: continue
-        size = size*1.5
+        size = df_cluster["size"][cluster_id]
+        if size < size_threshhold: continue
+        size = size * size_multiple
 
         fig_scatter.add_trace(go.Scatter(
             x = df_only_center[df_only_center["cluster"] == cluster_id]["embedding_x"],
             y = df_only_center[df_only_center["cluster"] == cluster_id]["embedding_y"],
             marker_size  = size,
-            marker_color = dict_cluster_color[cluster_id],
+            marker_color = df_cluster["color"][cluster_id],
             marker_opacity = 0.2,
             mode = 'markers+text',
-            text = dict_cluster_name[cluster_id],
+            text = df_cluster["name"][cluster_id],
             textposition='top center',
             hoverinfo = 'skip',
             name = "Genre"
@@ -295,7 +255,7 @@ def sync_checklists(category_selected, all_selected, dropdown):
     input_id = ctx.triggered[0]["prop_id"].split(".")[0]
     if input_id == "category-checklist":
         all_selected = ["All"] if set(category_selected) == set(l_content) else []
-    elif input_id == "all-checklist.value":
+    elif input_id == "all-checklist":
         category_selected = l_content if all_selected else []
 
     fig = go.Figure(layout=layout_scatter)
@@ -320,18 +280,18 @@ def sync_checklists(category_selected, all_selected, dropdown):
         for cluster_name, cluster_id in zip(df_only_center["sound_name"], df_only_center["cluster"]):
 
             # Genre領域のサイズを決定
-            size = df_graph[df_graph["cluster"] == cluster_id].shape[0]
-            if size < 10: continue
-            size = size*1.5
+            size = df_cluster["size"][cluster_id]
+            if size < size_threshhold: continue
+            size = size * size_multiple
 
             fig.add_trace(go.Scatter(
                 x = df_only_center[df_only_center["cluster"] == cluster_id]["embedding_x"],
                 y = df_only_center[df_only_center["cluster"] == cluster_id]["embedding_y"],
                 marker_size  = size,
-                marker_color = dict_cluster_color[cluster_id],
+                marker_color = df_cluster["color"][cluster_id],
                 marker_opacity = 0.2,
                 mode = 'markers+text',
-                text = dict_cluster_name[cluster_id],
+                text = df_cluster["name"][cluster_id],
                 textposition='top center',
                 hoverinfo = 'skip',
                 name = "Genre"
