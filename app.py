@@ -4,8 +4,6 @@ import os
 import numpy as np
 import pandas as pd
 
-from scipy.io import wavfile
-import wave
 import base64
 
 import plotly.graph_objs as go
@@ -261,8 +259,8 @@ def sound(clickData):
 
         if content != "Genre":
 
-            wav_file         = os.path.join(path_sound, content , sound_name) + ".wav"
-            wav_file_encoded = base64.b64encode(open(wav_file, 'rb').read())
+            mp3_file         = os.path.join(path_sound, content , sound_name) + ".mp3"
+            mp3_file_encoded = base64.b64encode(open(mp3_file, 'rb').read())
 
             # スペクトルを表示
             fig_line = go.Figure()
@@ -275,7 +273,7 @@ def sound(clickData):
 
             audio = html.Audio(
                 id='audio-player2',
-                src='data:audio/mpeg;base64,{}'.format(wav_file_encoded.decode()),
+                src='data:audio/mpeg;base64,{}'.format(mp3_file_encoded.decode()),
                 controls=False,
                 autoPlay=True,
             )
@@ -297,7 +295,7 @@ def sync_checklists(category_selected, all_selected, dropdown):
     input_id = ctx.triggered[0]["prop_id"].split(".")[0]
     if input_id == "category-checklist":
         all_selected = ["All"] if set(category_selected) == set(l_content) else []
-    else:
+    elif input_id == "all-checklist.value":
         category_selected = l_content if all_selected else []
 
     fig = go.Figure(layout=layout_scatter)
